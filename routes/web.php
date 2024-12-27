@@ -30,7 +30,9 @@ Route::get('/product/{slug}/{id}', [PageController::class, 'productdetail'])->na
 Route::middleware('auth')->group(function () {
     Route::get('/trasaction', [PageController::class, 'transaction'])->name('transaction');
 
-    Route::resource('/address', AddressController::class);
+    Route::get('/address', [PageController::class, 'address'])->name('address');
+
+    Route::resource('/admin/address', AddressController::class);
     Route::post('/address/active/{id}', [AddressController::class, 'active'])->name('address.active');
 
     Route::resource('/cart', CartController::class);

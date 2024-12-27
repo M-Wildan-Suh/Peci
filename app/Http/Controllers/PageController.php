@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
@@ -39,5 +40,11 @@ class PageController extends Controller
         ->where('status', '!=', 'pending')
         ->get();
         return view('guest.transaction', compact('data'));
+    }
+
+    public function address() {
+        $data = Address::where('user_id', Auth::id())->orderByDesc('active')->get();
+        
+        return view('guest.address', compact('data'));
     }
 }
