@@ -42,22 +42,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', [TransactionController::class, 'checkoutget'])->name('checkout.get');
     Route::post('/payment', [TransactionController::class, 'payment'])->name('payment');
     Route::post('/receive', [TransactionController::class, 'receive'])->name('receive');
-
-    Route::get('/admin/dashboard', function () {
-        return view('dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
-
-    Route::resource('/admin/user', UserController::class);
-
-    Route::resource('/admin/product', ProductController::class);
-
-    Route::resource('/admin/transaction', TransactionController::class);
-
-    Route::resource('/admin/product-gallery', ProductGalleryController::class);
-
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::group(['middleware' => 'cekRole'], function () {
+        Route::get('/admin/dashboard', function () {
+            return view('dashboard');
+        })->middleware(['auth', 'verified'])->name('dashboard');
+    
+        Route::resource('/admin/user', UserController::class);
+    
+        Route::resource('/admin/product', ProductController::class);
+    
+        Route::resource('/admin/transaction', TransactionController::class);
+    
+        Route::resource('/admin/product-gallery', ProductGalleryController::class);
+    });
 });
 
 require __DIR__.'/auth.php';
