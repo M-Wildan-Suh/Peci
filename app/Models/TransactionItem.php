@@ -10,6 +10,6 @@ class TransactionItem extends Model
     use HasFactory;
     public function product()
     {
-        return $this->belongsTo(product::class);
+        return $this->belongsTo(Product::class);
     }
 }
