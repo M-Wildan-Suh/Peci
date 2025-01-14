@@ -1,6 +1,8 @@
 <div class=" space-y-4 pt-4 divide-y divide-main">
     <div class=" flex gap-4">
-        <div class=" w-14 aspect-square rounded-full bg-red-500"></div>
+        <div class=" w-14 h-14 rounded-full overflow-hidden">
+            <img src="{{asset('storage/images/user/'. Auth::user()->profile_picture)}}" class=" w-full h-full object-cover" alt="">
+        </div>
         <div class=" flex-col justify-center flex">
             <p class=" font-bold">Admin</p>
             <button class=" flex items-center gap-1 text-third">

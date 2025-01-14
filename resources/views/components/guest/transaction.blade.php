@@ -41,6 +41,40 @@
         <p class=" font-black">Subtotal :</p>
         <p class=" text-2xl font-black text-second">Rp{{ str_replace(',', '.', number_format($item->subtotal)) }}</p>
     </div>
+    @if ($item->status === 'on ship' || $item->status === 'receive')
+        <div class=" w-full items-center flex justify-between gap-4">
+            <div class=" flex flex-col">
+                <div class=" flex gap-2 items-center text-sm text-third">
+                    <p><span class=" text-black">Nomor Resi :</span> {{$item->waybill}}</p>
+                    <button class="w-3 h-3" onclick="copyWaybill('{{ $item->waybill }}')">
+                        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M448 0H224c-35.3 0-64 28.65-64 64v224c0 35.35 28.65 64 64 64h224c35.35 0 64-28.65 64-64V64c0-35.35-28.7-64-64-64zm16 288c0 8.822-7.178 16-16 16H224c-8.8 0-16-7.2-16-16V64c0-8.822 7.178-16 16-16h224c8.822 0 16 7.178 16 16v224zM304 448c0 8.822-7.178 16-16 16H64c-8.822 0-16-7.178-16-16V224c0-8.822 7.178-16 16-16h64v-48H64c-35.35 0-64 28.7-64 64v224c0 35.35 28.65 64 64 64h224c35.35 0 64-28.65 64-64v-64h-48v64z" fill="#currentColor" class="fill-000000"></path>
+                        </svg>
+                    </button>
+                    
+                    <script>
+                        async function copyWaybill(waybill) {
+                            try {
+                                await navigator.clipboard.writeText(waybill);
+                                alert('Nomor Resi berhasil disalin!');
+                            } catch (err) {
+                                console.error('Gagal menyalin teks: ', err);
+                            }
+                        }
+                    </script>
+                </div>
+                <div class=" flex gap-2 items-center text-sm text-third">
+                    <p><span class=" text-black">Expedisi :</span> {{$item->service}}</p>
+                </div>
+
+            </div>
+            <a href="{{ $item->service === 'JNE' ? 'https://jne.co.id/tracking-package' : 
+                ($item->service === 'J&T' ? 'https://jet.co.id/track' : 
+                ($item->service === 'Si Cepat' ? 'https://sicepat.com/checkAwb' : '#')) }}">
+                <button class=" px-2 py-1 text-sm bg-second text-white rounded-md hover:bg-third duration-300">Lacak Paket</button>
+            </a>
+        </div>
+    @endif
     </div>
     <div class=" flex justify-end gap-4">
         @if ($item->status === 'on going') 

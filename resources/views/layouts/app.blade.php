@@ -16,7 +16,8 @@
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css"/>
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+        <link href="{{ asset('build/assets/app.css') }}" rel="stylesheet" />
     </head>
     <body class="font-sans antialiased"
         x-data="{ loading: true }" 
@@ -71,6 +72,8 @@
     </body>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="{{ asset('build/assets/app.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 

@@ -183,15 +183,27 @@
                     @csrf
                     @method('PUT')
                     <div class=" space-y-4">
-                        <div class="flex flex-col gap-2 text-sm font-medium px-4">
+                        <div class="flex flex-col gap-2 text-sm sm:text-base font-medium px-4">
                             <label for="status">Status</label>
-                            <select name="status" class="text-sm rounded-md border border-second focus:ring-third focus:border-third bg-background" id="status" >
+                            <select name="status" x-model="selectedStatus" class="text-sm sm:text-base rounded-md border border-second focus:ring-third focus:border-third bg-background" id="status" >
                                 {{-- <option value="" selected disabled>Change Status</option> --}}
                                 <option value="on going" :disabled="modalData.status === 'success'" :selected="modalData.status === 'on going'">On Going</option>
                                 <option value="on ship" :disabled="modalData.status === 'success'" :selected="modalData.status === 'on ship'">On Ship</option>
                                 <option value="receive" :disabled="modalData.status === 'success'" :selected="modalData.status === 'receive'">Receive</option>
                                 <option value="success" x-show="modalData.status === 'success'" :selected="modalData.status === 'success'">Success</option>
                             </select>
+                        </div>
+                        <div x-show="selectedStatus === 'on ship'||selectedStatus === 'receive'" class=" px-4 text-sm grid grid-cols-2 gap-4">
+                            <x-admin.component.textinput title="Waybill Number" placeholder="Input Your Waybill Number..." :value="''" x-model="modalData.waybill" name="waybill" />
+                            <div class="flex flex-col gap-2 text-sm sm:text-base font-medium">
+                                <label for="service">Delivery service</label>
+                                <select name="service" class="text-sm sm:text-base rounded-md border border-second focus:ring-third focus:border-third bg-background" id="service" >
+                                    <option value="" selected disabled>Change Service</option>
+                                    <option value="JNE" :selected="modalData.service === 'JNE'">JNE</option>
+                                    <option value="J&T" :selected="modalData.service === 'J&T'">J&T</option>
+                                    <option value="Si Cepat" :selected="modalData.service === 'Si Cepat'">Si Cepat</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="flex justify-end space-x-4 px-4">
                             <button
@@ -245,6 +257,7 @@
                 confirmDeleteModal: false,
                 editModal: false,
                 modalData: {},
+                selectedStatus : '',
 
                 get paginatedData() {
                     let start = (this.currentPage - 1) * this.perPage;
@@ -292,6 +305,7 @@
 
                 editForm(item) {
                     this.modalData = item;
+                    this.selectedStatus = item.status;
                     this.editModal = true;
                 },
 

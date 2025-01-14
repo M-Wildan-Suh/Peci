@@ -196,6 +196,8 @@ class TransactionController extends Controller
     public function update(Request $request, Transaction $transaction)
     {
         $transaction->status = $request->status;
+        $transaction->waybill = $request->waybill;
+        $transaction->service = $request->service;
 
         $transaction->save();
 

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -11,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.user.index');
+        $data = User::where('role', '!=', 'superadmin')->get();
+        return view('admin.user.index', compact('data'));
     }
 
     /**
@@ -19,7 +23,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.create');
     }
 
     /**
@@ -27,7 +31,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('user.index');
     }
 
     /**
@@ -59,6 +76,10 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = User::find($id);
+
+        $data->delete();
+
+        return redirect()->back();
     }
 }

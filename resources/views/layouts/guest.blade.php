@@ -12,8 +12,8 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        {{-- <link href="{{ asset('build/assets/app.css') }}" rel="stylesheet" /> --}}
+        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+        <link href="{{ asset('build/assets/app.css') }}" rel="stylesheet" />
     </head>
     <body x-data="{ loading: true }" 
         x-init="setTimeout(() => loading = false, 1000)"
@@ -77,5 +77,5 @@
         </div>
     </body>
     {{-- Script --}}
-        {{-- <script src="{{ asset('build/assets/app.js') }}"></script> --}}
+        <script src="{{ asset('build/assets/app.js') }}"></script>
 </html>

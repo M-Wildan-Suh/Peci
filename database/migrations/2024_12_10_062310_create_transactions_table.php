@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('transaction_code')->unique();
             $table->integer('subtotal')->nullable();
+            $table->string('waybill')->nullable();
+            $table->string('service')->nullable();
             $table->string('status')->default('pending');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
