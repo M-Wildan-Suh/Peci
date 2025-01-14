@@ -10,6 +10,6 @@ class Product extends Model
     use HasFactory;
     public function productgallery()
     {
-        return $this->hasMany(productgallery::class);
+        return $this->hasMany(ProductGallery::class);
     }
 }
